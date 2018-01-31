@@ -1,0 +1,15 @@
+#file metrics-agent-base.yml 
+metrics:
+  #report interval in seconds
+  reportInterval: 10
+  prefix: metrics:name=
+  include:
+     - metrics:name=CustomerController.getCustomer.Timer
+     - metrics:name=CustomerController.getCustomers.Timer
+  exclude:
+     - metrics:name=CustomerController.createCustomer.Counter
+kafka:
+  # list of brokers
+  brokers:
+     b1: host1.cbp.dhs.gov:9092
+     b2: host2.cbp.dhs.gov:9092

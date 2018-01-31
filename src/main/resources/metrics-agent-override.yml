@@ -1,0 +1,15 @@
+#file metrics-agent-override.yml
+metrics:
+  #report interval in seconds
+  reportInterval: 60
+  prefix: metrics:name=prod
+  include:
+     - metrics:name=CustomerController.getCustomer.Timer_Prod
+     - metrics:name=CustomerController.getCustomers.Timer_Prod
+  exclude:
+     - metrics:name=CustomerController.createCustomer.Counter_Prod
+kafka:
+  # list of brokers
+  brokers:
+     b1: host3.cbp.dhs.gov:9092
+     b2: host4.cbp.dhs.gov:9092

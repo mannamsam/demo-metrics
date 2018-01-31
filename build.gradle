@@ -1,0 +1,75 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+		metricsVersion = '3.1.0'
+		swaggerVersion = '2.7.0'
+		junitVersion = '4.12'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+      			url "https://plugins.gradle.org/m2/"
+    		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0")
+	}
+}
+
+group = 'mannam-example'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.palantir.docker'
+
+
+jar {
+    baseName = 'demo-metrics'
+    version =  '0.1.0'
+}
+
+javadoc {
+	source = sourceSets.main.allJava
+}
+
+docker {
+	name "${project.group}/${jar.baseName}"
+	files jar.archivePath
+	buildArgs(['JAR_FILE': "${jar.archiveName}"])
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    // tag::jetty[]
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    // end::jetty[]
+    // tag::actuator[]
+    //compile("org.springframework.boot:spring-boot-starter-actuator")
+    // end::actuator[]
+    compile("io.dropwizard.metrics:metrics-core:${metricsVersion}")
+    compile("io.springfox:springfox-swagger2:${swaggerVersion}")
+    compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+    compile("org.apache.commons:commons-text:1.2")
+    
+    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.3")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.9.3")
+    compile("com.fasterxml.jackson.core:jackson-annotations:2.9.3")
+    compile("org.apache.commons:commons-lang3:3.4")
+    compile("commons-io:commons-io:1.4")
+    
+    testCompile("junit:junit:${junitVersion}")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    
+}
