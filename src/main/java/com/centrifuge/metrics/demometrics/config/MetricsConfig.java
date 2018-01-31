@@ -60,7 +60,7 @@ public class MetricsConfig {
 				.convertDurationsTo(TimeUnit.MILLISECONDS).build();
 		*/
 
-		reporter.start(1, TimeUnit.MINUTES);
+		//reporter.start(1, TimeUnit.MINUTES);
 		
 		
 		final JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry()).convertDurationsTo(TimeUnit.MINUTES) 

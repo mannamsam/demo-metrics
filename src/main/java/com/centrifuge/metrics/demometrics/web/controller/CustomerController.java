@@ -131,7 +131,7 @@ public class CustomerController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucessfully created the customer"),
 			@ApiResponse(code = 404, message = "Customer not found for the given ID") })
 	public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
-		Meter requests = metricRegistry.meter("CustomerController.getCustomers.Meter");
+		Meter requests = metricRegistry.meter("CustomerController.deleteCustomer.Meter");
 		requests.mark();
 
 		if (null == customerDAO.delete(id)) {
